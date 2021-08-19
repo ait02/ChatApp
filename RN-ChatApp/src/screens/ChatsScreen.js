@@ -2,10 +2,10 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import ChatList from "../components/ChatList";
 
-const ChatsScreen = () => {
+const ChatsScreen = ({ navigation }) => {
   return (
     <View style={styles.background}>
-      <ChatList />
+      <ChatList navigation={navigation} />
     </View>
   );
 };

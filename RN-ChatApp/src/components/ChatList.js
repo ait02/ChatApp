@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import ChatMap from "./ChatMap";
 
-const ChatList = () => {
+const ChatList = ({ navigation }) => {
   const [persons, setPersons] = useState([
     {
       id: "1",
@@ -53,7 +53,12 @@ const ChatList = () => {
         data={persons}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <ChatMap item={item} firstItem={persons[persons.length - 1]} />
+          <ChatMap
+            item={item}
+            firstItem={persons[persons.length - 1]}
+            navigation={navigation}
+            name={item.name}
+          />
         )}
         showsVerticalScrollIndicator={false}
       />

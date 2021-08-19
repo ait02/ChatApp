@@ -2,14 +2,39 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View, Platform } from "react-native";
 import ChatsScreen from "./src/screens/ChatsScreen";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  getFocusedRouteNameFromRoute,
+  NavigationContainer,
+} from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 import SettingsScreen from "./src/screens/SettingsScreen";
 import IonIcons from "@expo/vector-icons/Ionicons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { SafeAreaView } from "react-native-safe-area-context";
+import ChatScreen from "./src/screens/ChatScreen";
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+const ChatStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        component={ChatsScreen}
+        name="Chats"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        component={ChatScreen}
+        name="Chat"
+        options={({ route }) => ({ title: route.params.name })}
+      />
+    </Stack.Navigator>
+  );
+};
 
 export default function App() {
   return (
@@ -34,7 +59,7 @@ export default function App() {
                     paddingTop: 10,
                   }}
                 >
-                  {route.name}
+                  {route.name !== "ChatsStack" ? route.name : "Chats"}
                 </Text>
               </SafeAreaView>
             </View>
@@ -47,9 +72,9 @@ export default function App() {
         }}
       >
         <Tab.Screen
-          name="Chats"
-          component={ChatsScreen}
-          options={{
+          name="ChatsStack"
+          component={ChatStack}
+          options={({ route }) => ({
             tabBarIcon: ({ focused }) => (
               <View>
                 <IonIcons
@@ -59,7 +84,8 @@ export default function App() {
                 />
               </View>
             ),
-          }}
+            title: "Chats",
+          })}
         />
         <Tab.Screen
           name="Settings"
