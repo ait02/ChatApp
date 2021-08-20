@@ -11,8 +11,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import SettingsScreen from "./src/screens/SettingsScreen";
 import IonIcons from "@expo/vector-icons/Ionicons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { SafeAreaView } from "react-native-safe-area-context";
 import ChatScreen from "./src/screens/ChatScreen";
+import ChatsHeader from "./src/components/ChatsHeader";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -24,13 +24,17 @@ const ChatStack = () => {
         component={ChatsScreen}
         name="Chats"
         options={{
-          headerShown: false,
+          headerShown: true,
+          header: ({ route }) => <ChatsHeader route={route} />,
         }}
       />
       <Stack.Screen
         component={ChatScreen}
         name="Chat"
-        options={({ route }) => ({ title: route.params.name })}
+        options={({ route }) => ({
+          title: route.params.name,
+          // header: () => <ChatsHeader route={route} />,
+        })}
       />
     </Stack.Navigator>
   );
@@ -41,29 +45,7 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={{
-          header: ({ route }) => (
-            <View
-              style={{
-                height: Platform.OS === "ios" ? "auto" : 100,
-                backgroundColor: "#242935",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <SafeAreaView style={{ backgroundColor: "#242935" }}>
-                <Text
-                  style={{
-                    color: "#fff",
-                    fontSize: 20,
-                    fontWeight: "bold",
-                    paddingTop: 10,
-                  }}
-                >
-                  {route.name !== "ChatsStack" ? route.name : "Chats"}
-                </Text>
-              </SafeAreaView>
-            </View>
-          ),
+          headerShown: false,
           tabBarStyle: {
             backgroundColor: "#242935",
           },
