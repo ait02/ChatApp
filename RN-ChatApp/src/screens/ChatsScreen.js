@@ -1,12 +1,16 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import ChatList from "../components/ChatList";
+import ChatsHeader from "../components/ChatsHeader";
 
-const ChatsScreen = ({ navigation }) => {
+const ChatsScreen = ({ navigation, route }) => {
   return (
-    <View style={styles.background}>
-      <ChatList navigation={navigation} />
-    </View>
+    <>
+      <ChatsHeader route={route} />
+      <View style={styles.background}>
+        <ChatList navigation={navigation} />
+      </View>
+    </>
   );
 };
 

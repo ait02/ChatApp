@@ -15,12 +15,12 @@ const ChatsHeader = ({ route }) => {
         <Text
           style={{
             color: "#fff",
-            fontSize: 20,
+            fontSize: 26,
             fontWeight: "bold",
             paddingTop: 20,
           }}
         >
-          {route.name !== "ChatsStack" ? route.name : "Chats"}
+          {route.name !== "TabScreen" ? route.name : "Chats"}
         </Text>
       </SafeAreaView>
     </View>

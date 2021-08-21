@@ -55,12 +55,10 @@ const ChatList = ({ navigation }) => {
         renderItem={({ item }) => (
           <ChatMap
             item={item}
-            firstItem={persons[persons.length - 1]}
+            lastPerson={persons[persons.length - 1]}
             navigation={navigation}
-            name={item.name}
           />
         )}
-        showsVerticalScrollIndicator={false}
       />
     </View>
   );

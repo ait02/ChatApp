@@ -2,18 +2,23 @@ import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
-const ChatMap = ({ item, firstItem, navigation, name }) => {
+const ChatMap = ({ item, lastPerson, navigation }) => {
   return (
     <View
       style={[
-        item === firstItem
+        item === lastPerson
           ? { borderBottomWidth: 0 }
           : { borderBottomWidth: 1 },
         { borderColor: "#A1A1A3" },
       ]}
     >
       <TouchableOpacity
-        onPress={() => navigation.navigate("Chat", { name: name })}
+        onPress={() =>
+          navigation.navigate("Chat", {
+            name: item.name,
+            image_url: item.image_url,
+          })
+        }
       >
         <View style={[styles.container]}>
           <View style={styles.profileContainer}>

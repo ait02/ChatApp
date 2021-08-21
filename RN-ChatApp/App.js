@@ -13,11 +13,13 @@ import IonIcons from "@expo/vector-icons/Ionicons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import ChatScreen from "./src/screens/ChatScreen";
 import ChatsHeader from "./src/components/ChatsHeader";
+import ChatHeader from "./src/components/ChatHeader";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+const StackSettings = createStackNavigator();
 
-const ChatStack = () => {
+const ChatStack = ({ navigation, route }) => {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -40,10 +42,59 @@ const ChatStack = () => {
   );
 };
 
+const TabScreens = ({ route, navigation }) => {
+  return (
+    <Tab.Navigator
+      initialRouteName="Chats"
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: "#242935",
+        },
+        tabBarActiveTintColor: "#fff",
+        tabBarInactiveTintColor: "#A1A1A3",
+      }}
+    >
+      <Tab.Screen
+        name="Chats"
+        component={ChatsScreen}
+        options={({ route }) => ({
+          tabBarIcon: ({ focused }) => (
+            <View>
+              <IonIcons
+                name="chatbubble-ellipses"
+                size={28}
+                color={focused ? "#fff" : "#A1A1A3"}
+              />
+            </View>
+          ),
+          title: "Chats",
+          tabBarVisible: false,
+        })}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View>
+              <FontAwesome
+                name="gears"
+                size={28}
+                color={focused ? "#fff" : "#A1A1A3"}
+              />
+            </View>
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
+
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator
+      {/* <Tab.Navigator
         screenOptions={{
           headerShown: false,
           tabBarStyle: {
@@ -67,6 +118,7 @@ export default function App() {
               </View>
             ),
             title: "Chats",
+            tabBarVisible: false,
           })}
         />
         <Tab.Screen
@@ -84,7 +136,23 @@ export default function App() {
             ),
           }}
         />
-      </Tab.Navigator>
+      </Tab.Navigator> */}
+      <Stack.Navigator>
+        <Stack.Screen
+          name="TabScreen"
+          component={TabScreens}
+          options={({ route }) => ({
+            headerShown: false,
+          })}
+        />
+        <Stack.Screen
+          name="Chat"
+          component={ChatScreen}
+          options={({ route, navigation }) => ({
+            header: () => <ChatHeader route={route} navigation={navigation} />,
+          })}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
